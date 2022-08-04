@@ -1,12 +1,12 @@
 <template>
   <div class="paginator-container">
-    <div class="round-ball red">
+    <div class="round-ball red" @click="previous()">
       <i class="fa-solid fa-chevron-left"></i>
     </div>
     <div class="round-ball yellow">
       {{ page }}
     </div>
-    <div class="round-ball green">
+    <div class="round-ball green" @click="next()">
       <i class="fa-solid fa-chevron-right"></i>
     </div>
   </div>
@@ -16,6 +16,15 @@
 import { defineComponent } from "vue";
 
 export default defineComponent({
+  emits: ["previousPage", "nextPage"],
+  methods: {
+    next() {
+      this.$emit("nextPage");
+    },
+    previous() {
+      this.$emit("previousPage");
+    },
+  },
   props: {
     page: {
       required: true,

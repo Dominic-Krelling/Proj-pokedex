@@ -11,7 +11,7 @@
       />
       <!-- {{ pokemon.sprites.other["official-artwork"] }} -->
     </section>
-    <Paginator :page="1" />
+    <Paginator :page="page" @nextPage="nextPage" @previousPage="previousPage" />
   </div>
 </template>
 
@@ -27,6 +27,17 @@ export default defineComponent({
   },
   components: { Paginator, PokemonCard },
   methods: {
+    nextPage() {
+      console.log(this.page);
+      this.page++;
+      this.getPagePokemons();
+    },
+    previousPage() {
+      if (this.page > 1) {
+        this.page--;
+        this.getPagePokemons();
+      }
+    },
     async getPokemon(pokemonId: Number) {
       const result = await axios.get(
         "https://pokeapi.co/api/v2/pokemon/" + pokemonId
@@ -34,7 +45,12 @@ export default defineComponent({
       return result;
     },
     async getPagePokemons() {
-      for (let i = this.page; i <= this.page * this.pokemonsPerPage; i++) {
+      this.pokemons = [];
+      for (
+        let i = this.page === 1 ? 1 : this.pokemonsPerPage * (this.page - 1);
+        i <= this.page * this.pokemonsPerPage;
+        i++
+      ) {
         await this.getPokemon(i).then((res) => {
           // console.log(res.data.);
           this.pokemons.push(res.data);
