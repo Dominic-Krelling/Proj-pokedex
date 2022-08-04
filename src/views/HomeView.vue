@@ -7,9 +7,9 @@
         :pokemonName="pokemon.name"
         :pokemonImage="pokemon.sprites.other['official-artwork'].front_default"
         :key="pokemon.name"
+        :pokemonType="pokemon.types[0].type.name"
       />
       <!-- {{ pokemon.sprites.other["official-artwork"] }} -->
-      <!-- :pokemonType="types[0].type.name" -->
     </section>
     <Paginator :page="1" />
   </div>
@@ -36,7 +36,7 @@ export default defineComponent({
     async getPagePokemons() {
       for (let i = this.page; i <= this.page * this.pokemonsPerPage; i++) {
         await this.getPokemon(i).then((res) => {
-          console.log(res.data.sprites.other["official-artwork"].front_default);
+          // console.log(res.data.);
           this.pokemons.push(res.data);
         });
       }

@@ -37,6 +37,7 @@ export default defineComponent({
   font-size: 20px;
   gap: 1rem;
   .round-ball {
+    cursor: pointer;
     width: 48px;
     height: 48px;
     display: flex;
